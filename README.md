@@ -1,242 +1,114 @@
-# Yang Huiyao - AI Agent / LLM Portfolio V3
+# 杨惠瑶 · AI Agent / LLM Engineer Portfolio
 
-个人简历 / 工程 Portfolio，使用 React + Vite + Tailwind CSS + Motion 构建，并通过 GitHub Actions 自动发布到 GitHub Pages。
+一个面向技术面试官、招聘方和开发者的个人作品集网站。项目用单页叙事展示 AI Agent / 大模型应用工程师的经历、项目责任边界、工程决策与技术栈，重点回答三个问题：**做过什么、个人负责什么、为什么这样设计**。
 
-## V3 主要变化
+> 这是用于呈现个人经历的前端 Portfolio，不包含案例中企业项目的源代码、数据或生产环境配置。
 
-- 将经验口径统一为 `2+ 年企业级大模型应用经验`，避免与 2024.07 - 至今的时间线冲突。
-- 公网页面不再直接展示手机号，新增 GitHub 入口。
-- Experience 改为数组驱动，后续新增公司 / 实习无需改页面组件。
-- Projects 改为数组自动渲染，后续新增项目无需手写 `<ProjectCase />`。
-- 项目展示增加 `MY ROLE / OWNERSHIP / ENGINEERING EVIDENCE / ENGINEERING DECISIONS`，更适合技术面试官快速判断个人贡献和设计取舍。
-- Skills 增加 `USED IN`，把技能与真实项目证据关联起来。
-- 调整正文对比度、标题字号、Section 间距和中文换行策略。
-- GitHub Actions 增加 production build 校验，避免再次把 `/src/main.jsx` 源码直接发布到 Pages。
+## 项目亮点
+
+- **面试官友好的项目表达**：每个案例按 `Role → Ownership → Engineering Evidence → Architecture → Engineering Decisions` 展开，区分个人贡献与团队项目背景。
+- **聚焦生产级 LLM 工程**：页面呈现 Multi-Agent Runtime、Tool Calling、动态 Skill、Memory / Context、RAG、MCP、长任务生命周期、模型推理与私有化交付等能力。
+- **两个可视化案例**：
+  - 自动化漏洞挖掘 Multi-Agent 平台：展示 Root / Sub Agent、Tools、RAG / MCP 与 Docker Sandbox 的协作关系。
+  - 通信协议安全分析 RAG 平台：展示从文档解析、领域切分、混合检索、重排到 MCP Tools / Agent 消费的链路。
+- **内容与视图分离**：个人信息、经历、项目、技术栈、教育背景全部集中在 `src/data.js`，新增内容通常无需改动页面组件。
+- **完整的访问体验**：响应式布局、移动端导航、明暗主题、锚点导航、高亮当前区块、入场动画，以及“减少动态效果”系统偏好的兼容。
+- **可部署性**：内置 GitHub Pages 工作流；Vite 会自动处理用户主页仓库和普通 Project Pages 仓库的基础路径。
+
+## 页面内容
+
+| 区块 | 面向访客传达的信息 |
+| --- | --- |
+| Hero / Stats | 候选人定位、开放机会状态，以及公开的能力规模数据 |
+| About / Experience | 企业级大模型应用研发背景、当前职责与交付范围 |
+| Selected Work | 两个脱敏企业案例的背景、个人负责模块、工程证据、指标与设计取舍 |
+| Tech Stack | 按 Agent Systems、RAG / Knowledge、Model & Inference、Backend Engineering 分类的技术能力 |
+| Engineering Mindset | Reliable、Observable、Context-aware、Production-ready 四项工程原则 |
+| Contact | 邮箱、GitHub 与可下载的公开版 PDF 简历 |
+
+## 技术栈
+
+- **框架与构建**：React 19、Vite 8、Node.js 20.19+
+- **样式**：Tailwind CSS 4（通过 Vite 插件接入）与自定义 CSS Design Tokens
+- **交互与动画**：Motion、Lucide React
+- **发布**：GitHub Actions、GitHub Pages
 
 ## 本地运行
 
-建议 Node.js >= 20.19。
+前置条件：Node.js `>= 20.19.0`。
 
 ```bash
 npm install
 npm run dev
 ```
 
-浏览器打开终端给出的地址，通常是：
+开发服务器启动后，访问终端显示的地址（通常为 `http://localhost:5173`）。
 
-```text
-http://localhost:5173/
-```
-
-正式构建检查：
+构建并本地预览生产版本：
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## 最常修改的文件
+## 内容维护
 
-### `src/data.js`
+日常更新优先修改 [src/data.js](src/data.js)，其中包含：
 
-个人信息、数据指标、工作经历、项目、技能和教育经历都集中在这里。
+- `profile`：姓名、职位、地点、联系方式和简介
+- `stats`：首页能力数据
+- `experiences`：工作经历时间线
+- `projects`：项目背景、个人职责、工程证据、设计决策、指标与技术栈
+- `expertise`、`principles`、`education`：技能、工程理念和教育经历
 
-### 修改个人信息
+页面会依据数组自动渲染经历、项目和能力卡片。新增项目时，建议优先填写可公开验证的个人 Ownership、工程取舍和能力范围；不要将无法公开或无法确认的数据写成量化成果。
 
-```js
-export const profile = {
-  name: '杨惠瑶',
-  role: 'AI Agent / 大模型应用开发工程师',
-  location: '北京',
-  experience: '2+ 年企业级大模型应用经验',
-  email: '1548824224@qq.com',
-  github: 'https://github.com/yanghuiyao779-blip',
-}
-```
+静态资源位于 `public/`：
 
-## 新增一段工作经历
+- `avatar.png`：头像
+- `Yang-Huiyao-Resume.pdf`：供访客下载的简历
+- `favicon.svg`：站点图标
 
-在 `experiences` 数组里继续增加一个对象即可：
+公开部署前请确认 PDF 和数据文件中不含不希望公开的联系方式、客户信息或内部资料。
 
-```js
-export const experiences = [
-  {
-    company: '当前公司',
-    role: '大模型应用开发 / 核心研发',
-    period: '2024.07 — 至今',
-    label: 'CURRENT POSITION',
-    products: ['产品 A', '产品 B'],
-    highlights: [
-      '职责 / 结果 1',
-      '职责 / 结果 2',
-    ],
-  },
-  {
-    company: '新公司或实习公司',
-    role: 'AI Engineer',
-    period: '2023.07 — 2024.06',
-    label: 'PREVIOUS POSITION',
-    products: ['项目名称'],
-    highlights: [
-      '职责 / 结果 1',
-      '职责 / 结果 2',
-    ],
-  },
-]
-```
-
-页面会自动生成新的时间线卡片，不需要修改 `App.jsx`。
-
-## 新增一个项目
-
-在 `projects` 数组末尾增加一个对象：
-
-```js
-{
-  id: '03',
-  type: 'generic', // 可用 agent / rag / generic
-  slug: 'new-project',
-  title: '新项目名称',
-  subtitle: 'One-line English subtitle',
-  role: 'AI Engineer / Core R&D',
-  status: 'Enterprise Project',
-  description: '项目背景与要解决的问题。',
-
-  ownership: [
-    '模块 A',
-    '模块 B',
-  ],
-
-  evidence: [
-    '可核验的工程证据 / 结果 1',
-    '可核验的工程证据 / 结果 2',
-  ],
-
-  decisions: [
-    {
-      title: '关键设计决策',
-      problem: '为什么这是一个问题？',
-      decision: '你最终如何设计，以及为什么。',
-    },
-  ],
-
-  stack: ['Python', 'FastAPI'],
-
-  metrics: [
-    { value: 'Metric', label: '可公开的数据或能力' },
-  ],
-
-  bullets: [
-    '完整工程细节 1',
-    '完整工程细节 2',
-  ],
-}
-```
-
-`projects.map(...)` 会自动渲染所有项目。
-
-### 项目数据填写原则
-
-优先顺序：
-
-1. 真实结果 / 可核验指标
-2. 个人 Ownership
-3. 关键工程决策和 Trade-off
-4. 系统架构
-5. 技术栈
-
-不要为了页面好看编造指标。公司数据不能公开时，可以写评测方法、能力范围或脱敏结果。
-
-## 新增技能
-
-`expertise` 也是数组。每个分组支持：
-
-```js
-{
-  icon: 'network', // network / database / code / terminal
-  title: 'Agent Systems',
-  eyebrow: 'Core',
-  description: '能力说明',
-  items: ['Skill A', 'Skill B'],
-  usedIn: ['真实项目 / 生产场景'],
-}
-```
-
-如果新增未知 icon，页面会自动 fallback 到 Code 图标。
-
-## 替换头像
-
-覆盖：
+## 项目结构
 
 ```text
-public/avatar.png
+src/
+├── App.jsx                  # 页面区块与数据渲染逻辑
+├── data.js                  # 可维护的简历与案例内容
+├── styles.css               # 主题变量、响应式布局与视觉样式
+└── components/
+    ├── AgentDiagram.jsx     # Multi-Agent 架构示意
+    ├── RagPipeline.jsx      # RAG 链路示意
+    ├── Navbar.jsx           # 导航、移动端菜单与当前区块状态
+    ├── Reveal.jsx           # 尊重减少动态效果偏好的入场动画
+    └── ThemeToggle.jsx      # 明暗主题切换
+public/                      # 头像、PDF 简历、图标等静态资源
+.github/workflows/deploy.yml # GitHub Pages 自动部署
 ```
 
-保持文件名不变。
+## 部署到 GitHub Pages
 
-## 替换 PDF 简历
+仓库已提供 [deploy.yml](.github/workflows/deploy.yml)。向 `main` 分支推送代码，或手动触发 workflow，即会安装依赖、构建、校验产物并部署到 GitHub Pages。
 
-覆盖：
+首次使用时，在仓库 **Settings → Pages → Build and deployment** 中选择 **GitHub Actions**。
 
-```text
-public/Yang-Huiyao-Resume.pdf
-```
+`vite.config.js` 会根据 GitHub Actions 环境自动设置路径：
 
-保持文件名不变。
+- `{username}.github.io` 仓库使用 `/`
+- 普通仓库使用 `/{repository-name}/`
 
-注意：GitHub Pages 是公网。如果 PDF 中包含完整手机号，任何访问者都可以下载并看到。需要隐私保护时，请上传脱敏后的公开版 PDF。
+如需在其他路径发布，可设置 `VITE_BASE_PATH` 覆盖默认值。
 
-## GitHub Pages 部署
+## 可用脚本
 
-仓库推荐命名：
+| 命令 | 用途 |
+| --- | --- |
+| `npm run dev` | 启动本地开发服务器 |
+| `npm run build` | 构建生产产物到 `dist/` |
+| `npm run preview` | 预览生产构建结果 |
 
-```text
-yanghuiyao779-blip.github.io
-```
+## 设计取向
 
-GitHub：
-
-```text
-Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
-```
-
-之后每次 push 到 `main` 都会自动构建并发布：
-
-```bash
-git add .
-git commit -m "update portfolio"
-git push
-```
-
-部署成功后访问：
-
-```text
-https://yanghuiyao779-blip.github.io/
-```
-
-## GitHub Pages 路径
-
-`vite.config.js` 会自动识别：
-
-- `username.github.io` -> `/`
-- 普通仓库 `portfolio` -> `/portfolio/`
-
-所以同一份代码也可以部署到普通 Project Pages。
-
-## 发布故障检查
-
-如果页面白屏，浏览器 Console 不应该出现：
-
-```text
-/src/main.jsx
-text/jsx MIME type
-```
-
-正确生产页面应该加载：
-
-```text
-/assets/index-xxxx.js
-/assets/index-xxxx.css
-```
-
-Workflow 中已经增加 `Verify production build`，会在 `dist/index.html` 仍引用 `/src/main.jsx` 时直接失败，避免发布错误版本。
+这个项目刻意不使用技能进度条或技术名词墙。对于 AI Agent 候选人，更有价值的信息是：复杂任务如何拆解，工具调用失败如何恢复，长上下文如何控制，检索质量如何评测，以及系统怎样从 PoC 走到可部署、可观察、可验收的交付状态。页面的内容结构与交互均围绕这些信息设计。
