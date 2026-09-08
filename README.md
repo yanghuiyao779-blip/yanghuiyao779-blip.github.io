@@ -1,124 +1,206 @@
-# Yang Huiyao · AI Agent / LLM Engineer Portfolio
+# Yang Huiyao - AI Agent / LLM Portfolio V3
 
-基于个人简历重新设计的工程师 Portfolio，视觉方向为 **Dark AI / Developer Portfolio**。
+个人简历 / 工程 Portfolio，使用 React + Vite + Tailwind CSS + Motion 构建，并通过 GitHub Actions 自动发布到 GitHub Pages。
 
-## 技术栈
+## V3 主要变化
 
-- React 19
-- Vite 8
-- Tailwind CSS 4
-- Motion
-- Lucide React
-- GitHub Actions + GitHub Pages
-
-## 设计特点
-
-- 深蓝黑 + Electric Blue + Violet + Cyan 的克制科技配色
-- Hero 中使用动态 Agent Runtime 架构图，而不是装饰性粒子特效
-- 核心数据（2 年企业级 LLM、30+ Tools、72+ Skills、2 个 AI Agent 0→1 项目）前置
-- Multi-Agent 项目使用 Agent Graph 视觉表达
-- RAG 项目使用 Domain-aware Retrieval Pipeline 视觉表达
-- 工程细节默认折叠，确保首页有信息密度但不形成文字墙
-- 深色 / 浅色主题切换
-- PC / Tablet / Mobile 响应式布局
-- `prefers-reduced-motion` 可访问性处理
-- 简历 PDF 下载
+- 将经验口径统一为 `2+ 年企业级大模型应用经验`，避免与 2024.07 - 至今的时间线冲突。
+- 公网页面不再直接展示手机号，新增 GitHub 入口。
+- Experience 改为数组驱动，后续新增公司 / 实习无需改页面组件。
+- Projects 改为数组自动渲染，后续新增项目无需手写 `<ProjectCase />`。
+- 项目展示增加 `MY ROLE / OWNERSHIP / ENGINEERING EVIDENCE / ENGINEERING DECISIONS`，更适合技术面试官快速判断个人贡献和设计取舍。
+- Skills 增加 `USED IN`，把技能与真实项目证据关联起来。
+- 调整正文对比度、标题字号、Section 间距和中文换行策略。
+- GitHub Actions 增加 production build 校验，避免再次把 `/src/main.jsx` 源码直接发布到 Pages。
 
 ## 本地运行
 
-要求 Node.js >= 20.19。
+建议 Node.js >= 20.19。
 
 ```bash
 npm install
 npm run dev
 ```
 
-终端会显示本地地址，一般为：
+浏览器打开终端给出的地址，通常是：
 
 ```text
-http://localhost:5173
+http://localhost:5173/
 ```
 
-生产构建：
+正式构建检查：
 
 ```bash
 npm run build
 npm run preview
 ```
 
-构建产物位于：
+## 最常修改的文件
+
+### `src/data.js`
+
+个人信息、数据指标、工作经历、项目、技能和教育经历都集中在这里。
+
+### 修改个人信息
+
+```js
+export const profile = {
+  name: '杨惠瑶',
+  role: 'AI Agent / 大模型应用开发工程师',
+  location: '北京',
+  experience: '2+ 年企业级大模型应用经验',
+  email: '1548824224@qq.com',
+  github: 'https://github.com/yanghuiyao779-blip',
+}
+```
+
+## 新增一段工作经历
+
+在 `experiences` 数组里继续增加一个对象即可：
+
+```js
+export const experiences = [
+  {
+    company: '当前公司',
+    role: '大模型应用开发 / 核心研发',
+    period: '2024.07 — 至今',
+    label: 'CURRENT POSITION',
+    products: ['产品 A', '产品 B'],
+    highlights: [
+      '职责 / 结果 1',
+      '职责 / 结果 2',
+    ],
+  },
+  {
+    company: '新公司或实习公司',
+    role: 'AI Engineer',
+    period: '2023.07 — 2024.06',
+    label: 'PREVIOUS POSITION',
+    products: ['项目名称'],
+    highlights: [
+      '职责 / 结果 1',
+      '职责 / 结果 2',
+    ],
+  },
+]
+```
+
+页面会自动生成新的时间线卡片，不需要修改 `App.jsx`。
+
+## 新增一个项目
+
+在 `projects` 数组末尾增加一个对象：
+
+```js
+{
+  id: '03',
+  type: 'generic', // 可用 agent / rag / generic
+  slug: 'new-project',
+  title: '新项目名称',
+  subtitle: 'One-line English subtitle',
+  role: 'AI Engineer / Core R&D',
+  status: 'Enterprise Project',
+  description: '项目背景与要解决的问题。',
+
+  ownership: [
+    '模块 A',
+    '模块 B',
+  ],
+
+  evidence: [
+    '可核验的工程证据 / 结果 1',
+    '可核验的工程证据 / 结果 2',
+  ],
+
+  decisions: [
+    {
+      title: '关键设计决策',
+      problem: '为什么这是一个问题？',
+      decision: '你最终如何设计，以及为什么。',
+    },
+  ],
+
+  stack: ['Python', 'FastAPI'],
+
+  metrics: [
+    { value: 'Metric', label: '可公开的数据或能力' },
+  ],
+
+  bullets: [
+    '完整工程细节 1',
+    '完整工程细节 2',
+  ],
+}
+```
+
+`projects.map(...)` 会自动渲染所有项目。
+
+### 项目数据填写原则
+
+优先顺序：
+
+1. 真实结果 / 可核验指标
+2. 个人 Ownership
+3. 关键工程决策和 Trade-off
+4. 系统架构
+5. 技术栈
+
+不要为了页面好看编造指标。公司数据不能公开时，可以写评测方法、能力范围或脱敏结果。
+
+## 新增技能
+
+`expertise` 也是数组。每个分组支持：
+
+```js
+{
+  icon: 'network', // network / database / code / terminal
+  title: 'Agent Systems',
+  eyebrow: 'Core',
+  description: '能力说明',
+  items: ['Skill A', 'Skill B'],
+  usedIn: ['真实项目 / 生产场景'],
+}
+```
+
+如果新增未知 icon，页面会自动 fallback 到 Code 图标。
+
+## 替换头像
+
+覆盖：
 
 ```text
-dist/
+public/avatar.png
 ```
+
+保持文件名不变。
+
+## 替换 PDF 简历
+
+覆盖：
+
+```text
+public/Yang-Huiyao-Resume.pdf
+```
+
+保持文件名不变。
+
+注意：GitHub Pages 是公网。如果 PDF 中包含完整手机号，任何访问者都可以下载并看到。需要隐私保护时，请上传脱敏后的公开版 PDF。
 
 ## GitHub Pages 部署
 
-项目已经包含：
+仓库推荐命名：
 
 ```text
-.github/workflows/deploy.yml
+yanghuiyao779-blip.github.io
 ```
 
-无需手写 Actions。
-
-### 方案 A：个人主页仓库（推荐）
-
-如果 GitHub 用户名是 `yourname`，创建仓库：
+GitHub：
 
 ```text
-yourname.github.io
+Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
 ```
 
-部署后访问：
-
-```text
-https://yourname.github.io/
-```
-
-### 方案 B：普通项目仓库
-
-例如仓库名：
-
-```text
-portfolio
-```
-
-部署后访问：
-
-```text
-https://yourname.github.io/portfolio/
-```
-
-`vite.config.js` 已经在 GitHub Actions 环境中根据 `GITHUB_REPOSITORY` 自动判断 Base Path：
-
-- `yourname.github.io` → `/`
-- 普通仓库 `portfolio` → `/portfolio/`
-
-因此通常不用手动修改 `base`。
-
-### GitHub 后台操作
-
-1. 创建仓库并上传整个项目。
-2. 确保默认分支是 `main`。
-3. 打开仓库 **Settings → Pages**。
-4. 在 **Build and deployment → Source** 选择 **GitHub Actions**。
-5. Push 到 `main` 后打开仓库的 **Actions** 页面。
-6. 等待 `Deploy Portfolio to GitHub Pages` 工作流完成。
-7. 返回 **Settings → Pages**，页面顶部会显示正式访问地址。
-
-## 首次上传命令
-
-```bash
-git init
-git add .
-git commit -m "feat: publish personal AI portfolio"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
-
-之后修改只需要：
+之后每次 push 到 `main` 都会自动构建并发布：
 
 ```bash
 git add .
@@ -126,60 +208,35 @@ git commit -m "update portfolio"
 git push
 ```
 
-GitHub Actions 会自动重新构建和部署。
-
-## 自定义域名
-
-如果以后给 GitHub Pages 绑定自定义域名（例如 `huiyao.dev`），Vite 应使用根路径 `/`。
-
-可以把 Workflow 的 Build 步骤改为：
-
-```yaml
-- name: Build
-  run: npm run build
-  env:
-    VITE_BASE_PATH: /
-```
-
-然后在 GitHub **Settings → Pages → Custom domain** 配置你的域名。
-
-## 修改个人信息
-
-核心简历数据集中在：
+部署成功后访问：
 
 ```text
-src/data.js
+https://yanghuiyao779-blip.github.io/
 ```
 
-姓名、邮箱、手机号、工作经历、技能和项目文字优先在这里修改。
+## GitHub Pages 路径
 
-页面结构：
+`vite.config.js` 会自动识别：
+
+- `username.github.io` -> `/`
+- 普通仓库 `portfolio` -> `/portfolio/`
+
+所以同一份代码也可以部署到普通 Project Pages。
+
+## 发布故障检查
+
+如果页面白屏，浏览器 Console 不应该出现：
 
 ```text
-src/App.jsx
+/src/main.jsx
+text/jsx MIME type
 ```
 
-全局视觉样式：
+正确生产页面应该加载：
 
 ```text
-src/styles.css
+/assets/index-xxxx.js
+/assets/index-xxxx.css
 ```
 
-头像：
-
-```text
-public/avatar.png
-```
-
-PDF 简历：
-
-```text
-public/Yang-Huiyao-Resume.pdf
-```
-
-## 隐私提醒
-
-当前网站按提供的简历保留了手机号和邮箱。GitHub Pages 是公开网站，如不希望手机号被公开搜索，可以：
-
-1. 在 `src/data.js` 删除 / 遮盖手机号；
-2. 同时替换 `public/Yang-Huiyao-Resume.pdf` 中的公开版本。
+Workflow 中已经增加 `Verify production build`，会在 `dist/index.html` 仍引用 `/src/main.jsx` 时直接失败，避免发布错误版本。

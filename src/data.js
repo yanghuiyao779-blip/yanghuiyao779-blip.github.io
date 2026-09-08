@@ -4,24 +4,25 @@ export const profile = {
   role: 'AI Agent / 大模型应用开发工程师',
   roleEn: 'AI Agent & LLM Application Engineer',
   location: '北京',
-  experience: '3 年经验',
+  experience: '2+ 年企业级大模型应用经验',
   education: '本科',
   availability: '一个月内到岗',
-  phone: '13103035256',
   email: '1548824224@qq.com',
+  github: 'https://github.com/yanghuiyao779-blip',
   summary:
-    '专注企业级 AI Agent 与大模型应用工程化，具备从需求分析、架构设计、研发测试到私有化部署与客户验收的完整 0→1 落地经验。',
+    '专注生产级 AI Agent、RAG 与大模型工程化，具备从需求分析、架构设计、核心研发、评测测试到私有化部署与客户验收的完整 0→1 落地经验。',
 }
 
 export const stats = [
-  { value: '2 年', label: '企业级 LLM 应用开发', note: 'Production experience' },
-  { value: '30+', label: 'Native Tools', note: 'Tool Calling ecosystem' },
-  { value: '72+', label: 'Dynamic Skills', note: 'Scenario-based loading' },
+  { value: '2+', label: '企业级大模型应用经验', note: 'Agent / LLM production delivery' },
+  { value: '30+', label: 'Native Tools 接入', note: 'Tool Registry · Schema Validation' },
+  { value: '72+', label: '场景化 Skills 动态加载', note: 'Capability boundary & prompt control' },
   { value: '2', label: 'AI Agent 项目 0→1', note: 'Design · Build · Deliver' },
 ]
 
 export const expertise = [
   {
+    icon: 'network',
     title: 'Agent Systems',
     eyebrow: 'Core',
     description: '围绕生产级 Agent Runtime 搭建可规划、可协作、可恢复、可观测的执行闭环。',
@@ -36,8 +37,10 @@ export const expertise = [
       'Context Engineering',
       'Tool Self-Healing',
     ],
+    usedIn: ['安星 / 自动化漏洞挖掘 Multi-Agent 平台'],
   },
   {
+    icon: 'database',
     title: 'RAG / Knowledge',
     eyebrow: 'Retrieval',
     description: '覆盖文档解析、领域切分、混合检索、重排、评测与增量索引的完整知识工程链路。',
@@ -51,8 +54,10 @@ export const expertise = [
       'Incremental Indexing',
       'Metadata Filtering',
     ],
+    usedIn: ['面向通信协议安全分析的领域 RAG 知识增强平台'],
   },
   {
+    icon: 'code',
     title: 'Model & Inference',
     eyebrow: 'LLM Infra',
     description: '从模型接入、评测选型到推理服务与离线环境适配，关注效果、稳定性与部署可控性。',
@@ -66,8 +71,10 @@ export const expertise = [
       'Token / Context Window',
       'Retry / Fallback',
     ],
+    usedIn: ['统一 LLM Gateway', '8 × 海光 K100_AI 64 GB DCU 环境适配'],
   },
   {
+    icon: 'terminal',
     title: 'Backend Engineering',
     eyebrow: 'Delivery',
     description: '用后端工程化能力支撑异步任务、生命周期、Tracing、服务化与私有化交付。',
@@ -83,30 +90,67 @@ export const expertise = [
       'Linux',
       'Agent Tracing',
     ],
+    usedIn: ['Agent 服务化与任务生命周期', 'RAG 服务化与私有化交付'],
   },
 ]
 
-export const experience = {
-  company: '中科数测科技有限公司',
-  role: '大模型应用开发 / 核心研发',
-  period: '2024.07 — 至今',
-  products: ['多功能漏洞挖掘智能体', '自动化模糊测试智能体'],
-  highlights: [
-    '负责企业级 AI Agent 架构与工程研发，落地任务规划、Multi-Agent 协作、Tool Calling、RAG、上下文管理、长任务执行与异常恢复。',
-    '面向源码审计、Web 渗透、协议模糊测试与固件分析，将大模型推理、知识检索与安全工具链融合为自动化任务闭环。',
-    '围绕 Prompt、上下文裁剪、知识检索、模型适配与效果评测持续迭代，提升复杂长链路任务的稳定性、准确性与执行效率。',
-    '覆盖 PoC、真实任务评测、研发测试、前后端联调、模型服务适配、离线部署、复杂问题排查与客户验收。',
-  ],
-}
+export const experiences = [
+  {
+    company: '中科数测科技有限公司',
+    role: '大模型应用开发 / 核心研发',
+    period: '2024.07 — 至今',
+    label: 'CURRENT POSITION',
+    products: ['多功能漏洞挖掘智能体', '自动化模糊测试智能体'],
+    highlights: [
+      '负责企业级 AI Agent 架构与工程研发，落地任务规划、Multi-Agent 协作、Tool Calling、RAG、上下文管理、长任务执行与异常恢复。',
+      '面向源码审计、Web 渗透、协议模糊测试与固件分析，将大模型推理、知识检索与安全工具链融合为自动化任务闭环。',
+      '围绕 Prompt、上下文裁剪、知识检索、模型适配与效果评测持续迭代，提升复杂长链路任务的稳定性、准确性与执行效率。',
+      '覆盖 PoC、真实任务评测、研发测试、前后端联调、模型服务适配、离线部署、复杂问题排查与客户验收。',
+    ],
+  },
+]
 
 export const projects = [
   {
     id: '01',
+    type: 'agent',
     slug: 'agent-platform',
     title: '安星 / 自动化漏洞挖掘 Multi-Agent 平台',
     subtitle: 'Production-grade Multi-Agent Runtime for autonomous security analysis',
+    role: 'LLM Agent Engine / Core R&D',
+    status: 'Enterprise Project',
     description:
       '面向源码审计、Web 安全测试及自动化漏洞分析场景，建设 LLM Agent Engine 核心能力，通过自研 Multi-Agent Runtime、Tool Calling、动态 Skill、Context Engineering 与 Docker Sandbox，实现任务规划、工具执行、漏洞验证与报告生成的自动化闭环。',
+    ownership: [
+      'Multi-Agent Runtime',
+      'Tool Calling Framework',
+      'Memory Compression',
+      'Dynamic Skills',
+      'LLM Gateway',
+      'Agent Tracing',
+    ],
+    evidence: [
+      '通过 Tool Registry + Schema Validation 接入 30+ Native Tools，并支持 Tool Call 参数自动修复。',
+      '支持 72+ 场景化 Skills 动态加载，通过 Skill / Tool 白名单减少无关 Prompt 注入并控制子 Agent 能力边界。',
+      '基于 RabbitMQ 建立 Heartbeat、取消、失败恢复、结果回传与结构化 Trace，支撑长任务回放、问题定位和报告交付。',
+    ],
+    decisions: [
+      {
+        title: '分层 Agent 模型',
+        problem: '复杂任务需要拆解、委派与结果汇总，同时避免能力边界失控。',
+        decision: '使用 Root Agent / Sub Agent + Agent Graph 管理父子关系、运行状态和消息通信。',
+      },
+      {
+        title: 'Schema-guided Self-Healing',
+        problem: 'Tool 参数错误与长链路调用失败会直接中断任务。',
+        decision: '将 Schema、错误原因和参数约束重新注入上下文，引导 LLM 修正 Tool Call，并结合超时、重试和异常处理。',
+      },
+      {
+        title: 'Context / Memory Compression',
+        problem: '长任务中 Tool Result、Error、Retry 与历史推理持续占用 Context Window。',
+        decision: '按 Token 使用量触发多级压缩，差异化保留关键上下文，并提供本地 Extractive Fallback。',
+      },
+    ],
     stack: [
       'Python',
       'LiteLLM',
@@ -119,10 +163,10 @@ export const projects = [
       'asyncio',
     ],
     metrics: [
-      { value: '30+', label: 'Native Tools' },
-      { value: '72+', label: 'Dynamic Skills' },
-      { value: 'Multi-Agent', label: 'Runtime' },
-      { value: 'Trace', label: 'Full-chain observability' },
+      { value: '30+', label: 'Native Tools Integrated' },
+      { value: '72+', label: 'Dynamic Skills Supported' },
+      { value: 'Lifecycle', label: 'Heartbeat · Cancel · Recovery' },
+      { value: 'Trace', label: 'Thinking · Tool · Finding · Progress' },
     ],
     bullets: [
       '设计 Root Agent / Sub Agent 层级任务模型，通过 Agent Graph 管理父子关系、运行状态与消息通信，支持复杂任务拆解、委派与汇总。',
@@ -136,11 +180,44 @@ export const projects = [
   },
   {
     id: '02',
+    type: 'rag',
     slug: 'rag-platform',
     title: '面向通信协议安全分析的领域 RAG 知识增强平台',
     subtitle: 'Domain-aware RAG pipeline for protocol understanding & testing',
+    role: 'RAG / Knowledge Engineering · Core R&D',
+    status: 'Enterprise Project',
     description:
       '面向 RFC 标准协议及私有通信协议，将协议规范转换为可检索、可溯源知识，并通过 MCP 为大模型 Agent 提供协议理解、状态分析与测试用例生成能力。',
+    ownership: [
+      'Document Pipeline',
+      'Domain-aware Chunking',
+      'Hybrid Retrieval',
+      'Rerank & Evaluation',
+      'Incremental Indexing',
+      'MCP Integration',
+    ],
+    evidence: [
+      '构建 Ground Truth 测试集，并使用 Recall@K、MRR / NDCG 对 Dense / Hybrid / Rerank 链路进行离线评测与 Bad Case 分析。',
+      '保留 Source / Page / Chunk Metadata，实现检索结果可溯源；通过文件指纹完成增量 Embedding 与 Source 级索引更新。',
+      '将知识库构建、协议检索、消息和状态查询封装为 MCP Tools，并加入相关性过滤、上下文裁剪与索引缺失降级。',
+    ],
+    decisions: [
+      {
+        title: 'Domain-aware Chunking',
+        problem: '固定长度切片会打断 RFC Section、ABNF、消息字段表等协议语义。',
+        decision: '按 RFC Section、MUST / SHOULD / MAY、ABNF 与私有协议消息结构进行切分。',
+      },
+      {
+        title: 'Hybrid Retrieval + Rerank',
+        problem: '纯语义召回对字段名、状态码等精确术语不稳定。',
+        decision: 'BGE-M3 + FAISS 做语义召回，BM25 补充精确术语，再通过 Cross-Encoder 二阶段精排。',
+      },
+      {
+        title: 'Structured Protocol Manifest',
+        problem: '纯非结构化 RAG 容易让模型猜测协议消息结构与状态关系。',
+        decision: '抽取消息类型、字段长度、请求响应与状态关系，生成 Protocol Manifest 与 RAG 结果联合使用。',
+      },
+    ],
     stack: [
       'Python',
       'FastAPI',
@@ -154,10 +231,10 @@ export const projects = [
       'MCP',
     ],
     metrics: [
-      { value: 'Hybrid', label: 'Dense + BM25' },
-      { value: '2-Stage', label: 'Retrieval + Rerank' },
-      { value: 'Traceable', label: 'Source / Page / Chunk' },
-      { value: 'Incremental', label: 'Index updates' },
+      { value: 'Hybrid', label: 'Dense + BM25 Retrieval' },
+      { value: '2-Stage', label: 'Retrieval + Cross-Encoder Rerank' },
+      { value: 'Eval', label: 'Recall@K · MRR · NDCG' },
+      { value: 'Incremental', label: 'Source-level Index Updates' },
     ],
     bullets: [
       '建设领域 RAG Pipeline，覆盖 PDF / Word / HTML / XML / JSON 文档解析、清洗、切片、Embedding、检索与重排，并保留 Source / Page / Chunk Metadata。',

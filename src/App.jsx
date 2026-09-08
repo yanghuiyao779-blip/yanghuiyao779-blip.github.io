@@ -12,16 +12,16 @@ import {
   Mail,
   MapPin,
   Network,
-  Phone,
   Sparkles,
   Terminal,
 } from 'lucide-react'
 import Navbar from './components/Navbar'
+import GitHubIcon from './components/GitHubIcon'
 import Reveal from './components/Reveal'
 import SectionHeader from './components/SectionHeader'
 import AgentDiagram from './components/AgentDiagram'
 import RagPipeline from './components/RagPipeline'
-import { education, experience, expertise, principles, profile, projects, stats } from './data'
+import { education, experiences, expertise, principles, profile, projects, stats } from './data'
 
 const base = import.meta.env.BASE_URL
 const resumeUrl = `${base}Yang-Huiyao-Resume.pdf`
@@ -242,42 +242,60 @@ function Experience() {
           index="02"
           eyebrow="EXPERIENCE"
           title="从 Agent 核心研发，到端到端交付。"
-          description="工作重点集中在企业级 AI Agent 架构、工程研发、安全场景融合、效果优化与私有化落地。"
+          description="时间线只展示可核验经历；后续新增公司或实习时，只需在 src/data.js 的 experiences 数组继续追加。"
         />
 
-        <Reveal className="experience-card">
-          <div className="experience-aside">
-            <span className="experience-period">{experience.period}</span>
-            <div className="experience-dot-line"><i /><span /></div>
-          </div>
-          <div className="experience-main">
-            <div className="experience-heading">
-              <div>
-                <span className="company-label">CURRENT POSITION</span>
-                <h3>{experience.company}</h3>
-                <p>{experience.role}</p>
+        <div className="experience-list">
+          {experiences.map((experience, experienceIndex) => (
+            <Reveal className="experience-card" key={`${experience.company}-${experience.period}`} delay={experienceIndex * .05}>
+              <div className="experience-aside">
+                <span className="experience-period">{experience.period}</span>
+                <div className="experience-dot-line"><i /><span /></div>
               </div>
-              <div className="product-pills">
-                {experience.products.map((product) => <span key={product}>{product}</span>)}
-              </div>
-            </div>
-            <div className="experience-highlights">
-              {experience.highlights.map((item, index) => (
-                <div className="experience-point" key={item}>
-                  <span>0{index + 1}</span>
-                  <p>{item}</p>
+              <div className="experience-main">
+                <div className="experience-heading">
+                  <div>
+                    <span className="company-label">{experience.label || 'EXPERIENCE'}</span>
+                    <h3>{experience.company}</h3>
+                    <p>{experience.role}</p>
+                  </div>
+                  <div className="product-pills">
+                    {experience.products?.map((product) => <span key={product}>{product}</span>)}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+                <div className="experience-highlights">
+                  {experience.highlights.map((item, index) => (
+                    <div className="experience-point" key={item}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <p>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
 
-function ProjectCase({ project, type }) {
+function GenericProjectVisual({ project }) {
+  return (
+    <div className="generic-project-visual">
+      <span>PROBLEM</span><i />
+      <span>ARCHITECTURE</span><i />
+      <span>BUILD</span><i />
+      <span>EVALUATE</span><i />
+      <span>DELIVER</span>
+      <small>{project.title}</small>
+    </div>
+  )
+}
+
+function ProjectCase({ project }) {
   const [expanded, setExpanded] = useState(false)
+  const type = project.type || 'generic'
 
   return (
     <article className={`project-case project-case-${type}`}>
@@ -288,14 +306,34 @@ function ProjectCase({ project, type }) {
             <h3>{project.title}</h3>
             <p className="project-subtitle">{project.subtitle}</p>
           </div>
-          <span className="project-role-pill">CORE R&D</span>
+          <span className="project-role-pill">{project.status || 'PROJECT'}</span>
         </div>
         <p className="project-description">{project.description}</p>
       </Reveal>
 
+      <Reveal className="project-proof-grid" delay={.04}>
+        <div className="project-proof-card project-proof-role">
+          <span className="proof-label">MY ROLE</span>
+          <strong>{project.role}</strong>
+          <p>明确个人负责边界，避免把团队成果等同于个人贡献。</p>
+        </div>
+        <div className="project-proof-card">
+          <span className="proof-label">OWNERSHIP</span>
+          <div className="ownership-tags">
+            {project.ownership.map((item) => <span key={item}>{item}</span>)}
+          </div>
+        </div>
+        <div className="project-proof-card">
+          <span className="proof-label">ENGINEERING EVIDENCE</span>
+          <ul className="evidence-list">
+            {project.evidence.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+      </Reveal>
+
       <div className="project-showcase">
         <Reveal className="project-visual" delay={.05}>
-          {type === 'agent' ? <AgentDiagram compact /> : <RagPipeline />}
+          {type === 'agent' ? <AgentDiagram compact /> : type === 'rag' ? <RagPipeline /> : <GenericProjectVisual project={project} />}
         </Reveal>
         <Reveal className="project-metrics" delay={.1}>
           {project.metrics.map((metric) => (
@@ -307,6 +345,23 @@ function ProjectCase({ project, type }) {
         </Reveal>
       </div>
 
+      <Reveal className="project-decisions" delay={.11}>
+        <div className="project-subsection-heading">
+          <span>ENGINEERING DECISIONS</span>
+          <p>不仅展示“用了什么”，也展示“为什么这样设计”。</p>
+        </div>
+        <div className="decision-grid">
+          {project.decisions.map((decision, index) => (
+            <div className="decision-card" key={decision.title}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h4>{decision.title}</h4>
+              <p><strong>Problem</strong>{decision.problem}</p>
+              <p><strong>Decision</strong>{decision.decision}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
       <Reveal className="project-stack" delay={.12}>
         <span>TECH STACK</span>
         <div>
@@ -316,7 +371,7 @@ function ProjectCase({ project, type }) {
 
       <Reveal className="project-details" delay={.15}>
         <button className="details-toggle" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
-          <span>{expanded ? '收起工程细节' : '查看工程细节'}</span>
+          <span>{expanded ? '收起完整工程细节' : '查看完整工程细节'}</span>
           <ChevronDown className={expanded ? 'rotate' : ''} size={18} />
         </button>
         <motion.div
@@ -347,18 +402,17 @@ function Projects() {
           index="03"
           eyebrow="SELECTED WORK"
           title="用项目证明工程能力，而不是堆技术名词。"
-          description="两个代表性项目分别覆盖 Agent Runtime 核心工程与领域 RAG 全链路：从架构设计、核心模块研发，到模型接入、评测、服务化和实际交付。"
+          description="项目按 Role → Ownership → Evidence → Architecture → Engineering Decisions 组织，让面试官快速判断个人贡献、工程深度和设计取舍。"
         />
         <div className="project-list">
-          <ProjectCase project={projects[0]} type="agent" />
-          <ProjectCase project={projects[1]} type="rag" />
+          {projects.map((project) => <ProjectCase project={project} key={project.id} />)}
         </div>
       </div>
     </section>
   )
 }
 
-const expertiseIcons = [Network, Database, Code2, Terminal]
+const expertiseIcons = { network: Network, database: Database, code: Code2, terminal: Terminal }
 
 function Skills() {
   return (
@@ -373,7 +427,7 @@ function Skills() {
 
         <div className="skills-bento">
           {expertise.map((group, index) => {
-            const Icon = expertiseIcons[index]
+            const Icon = expertiseIcons[group.icon] || Code2
             return (
               <Reveal className={`skill-card skill-card-${index + 1}`} key={group.title} delay={index * .05}>
                 <div className="skill-card-top">
@@ -384,6 +438,10 @@ function Skills() {
                 <p>{group.description}</p>
                 <div className="skill-tags">
                   {group.items.map((item) => <span key={item}>{item}</span>)}
+                </div>
+                <div className="skill-used-in">
+                  <span>USED IN</span>
+                  <div>{group.usedIn.map((item) => <strong key={item}>{item}</strong>)}</div>
                 </div>
               </Reveal>
             )
@@ -451,8 +509,8 @@ function Contact() {
             <a className="button button-primary button-large" href={`mailto:${profile.email}`}>
               <Mail size={18} /> {profile.email}
             </a>
-            <a className="button button-ghost button-large" href={`tel:${profile.phone}`}>
-              <Phone size={18} /> {profile.phone}
+            <a className="button button-ghost button-large" href={profile.github} target="_blank" rel="noreferrer">
+              <GitHubIcon size={18} /> GitHub
             </a>
             <a className="button button-ghost button-large" href={resumeUrl} download>
               <Download size={18} /> Resume PDF
@@ -506,6 +564,7 @@ export default function App() {
     jobTitle: profile.role,
     address: { '@type': 'PostalAddress', addressLocality: profile.location },
     email: `mailto:${profile.email}`,
+    sameAs: [profile.github],
   }), [])
 
   useEffect(() => {
@@ -518,7 +577,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Navbar theme={theme} onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} resumeUrl={resumeUrl} />
+      <Navbar theme={theme} onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} resumeUrl={resumeUrl} githubUrl={profile.github} />
       <main>
         <Hero />
         <Stats />

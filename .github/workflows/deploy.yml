@@ -36,6 +36,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify production build
+        shell: bash
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          if grep -q "/src/main.jsx" dist/index.html; then
+            echo "ERROR: production index still references JSX source"
+            exit 1
+          fi
+          echo "Production build verified"
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
 

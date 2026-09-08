@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Download, Menu, X } from 'lucide-react'
+import GitHubIcon from './GitHubIcon'
 import ThemeToggle from './ThemeToggle'
 
 const navItems = [
@@ -10,7 +11,7 @@ const navItems = [
   ['contact', 'Contact'],
 ]
 
-export default function Navbar({ theme, onToggleTheme, resumeUrl }) {
+export default function Navbar({ theme, onToggleTheme, resumeUrl, githubUrl }) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('about')
   const [scrolled, setScrolled] = useState(false)
@@ -62,6 +63,9 @@ export default function Navbar({ theme, onToggleTheme, resumeUrl }) {
         </nav>
 
         <div className="navbar-actions">
+          <a className="icon-button github-nav" href={githubUrl} target="_blank" rel="noreferrer" aria-label="打开 GitHub">
+            <GitHubIcon size={17} />
+          </a>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <a className="resume-nav" href={resumeUrl} download>
             <Download size={15} />
@@ -78,6 +82,7 @@ export default function Navbar({ theme, onToggleTheme, resumeUrl }) {
           {navItems.map(([id, label]) => (
             <button key={id} onClick={() => jump(id)}>{label}</button>
           ))}
+          <a href={githubUrl} target="_blank" rel="noreferrer">GitHub</a>
           <a href={resumeUrl} download>Download Resume</a>
         </div>
       )}
