@@ -546,8 +546,8 @@ function Footer() {
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'dark'
-    return localStorage.getItem('portfolio-theme') || 'dark'
+    if (typeof window === 'undefined') return 'light'
+    return localStorage.getItem('portfolio-theme') || 'light'
   })
 
   useEffect(() => {
